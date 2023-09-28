@@ -1,8 +1,22 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse
 from predict import read_image, preprocess_image, load_model, generate_prediction, top_matches
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Define a list of allowed origins (domains)
+# Replace '*' with the specific origins you want to allow, e.g., ['https://example.com', 'https://another-domain.com']
+allowed_origins = ["https://bee-api-ng8o.onrender.com"]
+
+# Add CORS middleware to allow certain URLs access
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,  # Allow cookies in cross-origin requests
+    allow_methods=["*"],     # You can specify specific HTTP methods if needed
+    allow_headers=["*"],     # You can specify specific headers if needed
+)
 
 @app.get('/')
 def root_hello():
