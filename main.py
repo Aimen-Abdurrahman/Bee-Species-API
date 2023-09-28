@@ -1,0 +1,40 @@
+import json
+from fastapi import FastAPI, UploadFile, File
+from fastapi.responses import FileResponse
+from predict import read_image, preprocess_image, load_model, generate_prediction, top_matches
+
+app = FastAPI()
+
+@app.get('/')
+def root_hello():
+    return {'Hello': 'World'}
+
+@app.post('/generate')
+async def predict_image(file: UploadFile = File(...)):
+    #Read file
+    image = read_image(await file.read())
+    #Preprocess image
+    image = preprocess_image(image)
+    #Predict
+    model = load_model()
+    predictions = generate_prediction(model, image)
+    top_names, top_probabilities = top_matches(predictions)
+
+    top_names_norm = []
+    for i in top_names:
+        top_names_norm.append(str(i))
+
+    top_probabilities_norm = []
+    for i in top_probabilities:
+        top_probabilities_norm.append(i.item())
+
+    result = list(zip(top_names_norm, top_probabilities_norm))
+    
+    return result
+
+
+
+
+# @app.get('/show')
+# def show_image():
+#     return FileResponse('path.jpg')
