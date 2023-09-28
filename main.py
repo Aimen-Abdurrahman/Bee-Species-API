@@ -7,7 +7,7 @@ app = FastAPI()
 
 # Define a list of allowed origins (domains)
 # Replace '*' with the specific origins you want to allow, e.g., ['https://example.com', 'https://another-domain.com']
-allowed_origins = ["https://bee-api-ng8o.onrender.com", "http://localhost:8000"]
+allowed_origins = ["https://bee-api-ng8o.onrender.com", "https://bee-api-ng8o.onrender.com:8080", "http://localhost:8000"]
 
 # Add CORS middleware to allow certain URLs access
 app.add_middleware(
