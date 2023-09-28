@@ -1,4 +1,3 @@
-import json
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse
 from predict import read_image, preprocess_image, load_model, generate_prediction, top_matches
